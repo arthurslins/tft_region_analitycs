@@ -17,7 +17,7 @@ def increment_counter(increment_value=0):
 
 st.sidebar.header("tft_region_analitycs")
 st.sidebar.image("https://i2.wp.com/gamehall.com.br/wp-content/uploads/2020/03/teamfight-tactics.jpg?fit=1920%2C1080&ssl=1", use_column_width=True)
-pesquisa = st.sidebar.text_input("Inut your nick for search")
+pesquisa = st.sidebar.text_input("Input your nick for search")
 pd.set_option('display.max_colwidth', -1)
 
 st.header ("Team fight tatics region analitycs")
@@ -99,8 +99,8 @@ def main ():
         parcial=pd.DataFrame()
         parcial["Nick"]=df["Nick"]
         parcial["League Points"]=df["League Points_x"]
-        parcial["Daily Games"]=df["Games_x"]
-        parcial[" Daily League Points "]=df["League Points_x"]-df["League Points_y"]
+        parcial["Total Games"]=df["Games_x"]
+        parcial["Daily League Points"]=df["League Points_x"]-df["League Points_y"]
         parcial["Daily Games"]=df["Games_x"]-df["Games_y"]
         parcial=parcial.sort_values("Daily League Points",ascending=False).reset_index(drop=True)
         parcial.sort_values(['Daily League Points', 'League Points'], ascending=[False, False], inplace=True)
@@ -131,6 +131,7 @@ def main ():
         parcial["lolchess"]=lolchess
         parcial["mobalytics"]=moba
         cols=["Nick", "Daily League Points", "Daily Games", "League Points", "Total Games","lolchess", "mobalytics"]
+        
         parcial = parcial[cols] 
         parcial.rename(columns={"Total Games": "Total Matches"},inplace=True)  
 #         parcial["League Points Diários"] = parcial["League Points Diários"].astype(int)
@@ -171,7 +172,7 @@ def main ():
                     
             snap3=snap3.merge(parcial,how="left",on="Nick")
             # st.write(snap3)
-            snap3["Total games in snap"]=abs(snap3["Total Games"]-snap3["Total Matches"])
+            snap3["Total games in snap"]=abs(snap3["Daily Games_x"]-snap3["Total Matches"])
             snap3.sort_values(by="League Points",ascending=False,inplace=True)
             snap3=snap3.fillna(0)
             # st.write(snap3)
