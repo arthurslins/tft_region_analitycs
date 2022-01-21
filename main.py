@@ -104,14 +104,9 @@ def main ():
         parcial["Daily Games"]=df["Games_x"]-df["Games_y"]
         parcial=parcial.sort_values("Daily League Points",ascending=False).reset_index(drop=True)
         parcial.sort_values(['Daily League Points', 'League Points'], ascending=[False, False], inplace=True)
-        # parcial.index += 1
-
+        # parcial.index += 1       
+        parcial.to_csv(f"parcial{server}.csv")   
         
-        
-        parcial.to_csv(f"parcial{server}.csv")
-            
-        
-    
         return parcial,dfo
 
     parcial,dfo = day(server)
