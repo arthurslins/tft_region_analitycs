@@ -1,5 +1,4 @@
-
-import streamlit as st
+mport streamlit as st
 import pandas as pd
 import numpy as np
 import json
@@ -18,7 +17,7 @@ def increment_counter(increment_value=0):
 st.sidebar.header("tft_region_analitycs")
 st.sidebar.image("https://i2.wp.com/gamehall.com.br/wp-content/uploads/2020/03/teamfight-tactics.jpg?fit=1920%2C1080&ssl=1", use_column_width=True)
 pesquisa = st.sidebar.text_input("Input your nick for search")
-# pd.set_option('display.max_colwidth', -1)
+pd.set_option('display.max_colwidth', -1)
 
 st.header ("Team fight tatics region analitycs")
 info= st.checkbox("Information")
@@ -104,13 +103,17 @@ def main ():
         parcial["Daily Games"]=df["Games_x"]-df["Games_y"]
         parcial=parcial.sort_values("Daily League Points",ascending=False).reset_index(drop=True)
         parcial.sort_values(['Daily League Points', 'League Points'], ascending=[False, False], inplace=True)
-        # parcial.index += 1       
-        parcial.to_csv(f"parcial{server}.csv")   
+        # parcial.index += 1
+
         
+        
+        parcial.to_csv(f"parcial{server}.csv")
+            
+        
+    
         return parcial,dfo
 
-    parcial1,dfo = day(server)
-    st.write(parcial)
+    parcial,dfo = day(server)
 
 
     if st.button("Calculate daily lps",on_click=increment_counter,kwargs=dict(increment_value=1)):
@@ -259,3 +262,4 @@ if __name__ == "__main__":
 # while 1:
 #     schedule.run_pending()
 #     time.sleep(1)
+
