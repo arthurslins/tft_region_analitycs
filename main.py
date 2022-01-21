@@ -239,7 +239,8 @@ def main ():
             troca(dfo) 
             # st.session_state.count=0  
             tz = pytz.timezone("Brazil/East")
-            time_now=datetime.datetime.now().time()
+            time_now=datetime.datetime.now(tz).time()
+            
             current_time = time_now.strftime("%H:%M:%S")
             with open('current_time.txt',"w") as f:
                 f.write(f'current_time={current_time}')
