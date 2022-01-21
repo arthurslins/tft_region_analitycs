@@ -5,15 +5,13 @@ import numpy as np
 import json
 import requests
 from IPython.display import HTML
-import datetime as datetime
-from datetime import datetime
+import datetime 
 import pytz
 tz = pytz.timezone("Brazil/East")
 
-if 'count' not in st.session_state:
-        st.session_state.count = 0
-def increment_counter(increment_value=0):
-    st.session_state.count += increment_value
+
+# def increment_counter(increment_value=0):
+#     st.session_state.count += increment_value
 
 st.sidebar.header("tft_region_analitycs")
 st.sidebar.image("https://i2.wp.com/gamehall.com.br/wp-content/uploads/2020/03/teamfight-tactics.jpg?fit=1920%2C1080&ssl=1", use_column_width=True)
@@ -43,7 +41,7 @@ def main ():
         'Choose a server?',
         lista_server)
     result=''.join([i for i in server if not i.isdigit()])
-
+    
     def criar(server):
             
         server = server
@@ -117,9 +115,15 @@ def main ():
     parcial,dfo = day(server)
 
 
-    if st.button("Calculate daily lps",on_click=increment_counter,kwargs=dict(increment_value=1)):
+    if st.button("Calculate daily lps"):
         
-
+        with open('count.txt',"r") as f:
+            contents = f.read()
+        count=int(contents[6])
+        count=count+1
+        print(f"The program was used {count} times today")
+        with open('count.txt',"w") as f:
+            f.write(f'count={count}')
         parcial["Posição"]=np.arange(parcial.shape[0])
         parcial.set_index(parcial["Posição"],inplace=True)
         parcial.drop("Posição",axis=1,inplace=True)
@@ -143,8 +147,10 @@ def main ():
         parcial.index+=1
         st.write(parcial[parcial["Nick"]==pesquisa])
         
-        st.write(parcial,unsafe_allow_html=True)
+        st.write(parcial, unsafe_allow_html=True)
+        # st.write(parcial.to_html(escape=False, index=False),unsafe_allow_html=True)
         
+        st.sidebar.write(f"The program was used {count} times today")
 
     def troca(dfo):
         dia_ant=dfo
@@ -168,6 +174,7 @@ def main ():
     snapi= st.checkbox("Snapshots")
     try:
         if snapi:
+
             snap3=pd.read_csv("snap3.3.csv",index_col=0)
                     
             snap3=snap3.merge(parcial,how="left",on="Nick")
@@ -217,14 +224,28 @@ def main ():
 
   
     senha= st.sidebar.text_input("Enter Admin password to update day")
-    st.write(senha)   
+    st.write(senha)
+    
+    # st.sidebar.number_input("coloque o numero")
+    
     if senha == "12345":
         if st.button("Update the day"):
+            with open('count.txt',"r") as f:
+                contents = f.read()
+            count=int(contents[6])
+            count=0
+            print(f"The program was used {count} times today")
+            with open('count.txt',"w") as f:
+                f.write(f'count={count}')
             troca(dfo) 
-            st.session_state.count=0  
-            now = datetime.now(tz=tz)
-            dt_string = now.strftime("%H:%M:%S")
-            st.sidebar.write("Horário do reset diário:",dt_string)   
+            # st.session_state.count=0  
+            tz = pytz.timezone("Brazil/East")
+            time_now=datetime.datetime.now().time()
+            current_time = time_now.strftime("%H:%M:%S")
+            with open('current_time.txt',"w") as f:
+                f.write(f'current_time={current_time}')
+            st.sidebar.write(f"The program was used {count} times today")
+            st.sidebar.write("The time this program was reset was :",current_time,"Brazil/East")   
     # if st.button("Atualizar o dia"):
     #     senha= st.number_input("Insira a senha")
     #     st.write(senha)
@@ -248,7 +269,7 @@ def main ():
 if __name__ == "__main__":
 
     main()
-    st.sidebar.write('Quantas vezes  o app foi utilizado no dia = ', st.session_state.count)
+    # st.sidebar.write('Quantas vezes  o app foi utilizado no dia = ', st.write(count))
 
 
 
