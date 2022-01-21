@@ -109,7 +109,8 @@ def main ():
         
         return parcial,dfo
 
-    parcial,dfo = day(server)
+    parcial1,dfo = day(server)
+    st.write(parcial)
 
 
     if st.button("Calculate daily lps",on_click=increment_counter,kwargs=dict(increment_value=1)):
