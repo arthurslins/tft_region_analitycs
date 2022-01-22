@@ -119,7 +119,7 @@ def main ():
         
         with open('count.txt',"r") as f:
             contents = f.read()
-        count=int(contents[6])
+        count=int(contents.split("=")[-1])
         count=count+1
         print(f"The program was used {count} times today")
         with open('count.txt',"w") as f:
@@ -262,9 +262,9 @@ def main ():
         if st.button("Update the day"):
             with open('count.txt',"r") as f:
                 contents = f.read()
-            count=int(contents[6])
+            count=int(contents.split("=")[-1])
             count=0
-            print(f"The program was used {count} times today")
+            # print(f"The program was used {count} times today")
             with open('count.txt',"w") as f:
                 f.write(f'count={count}')
             troca(dfo) 
@@ -277,7 +277,7 @@ def main ():
                 f.write(f'current_time={current_time}')
     with open('count.txt',"r") as f:
         contents = f.read()
-    count=int(contents[6])
+    count=int(contents.split("=")[-1])
     with open('current_time.txt',"r") as f:
         current_time = f.read()
     current_time=current_time.split("=")[-1]
