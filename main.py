@@ -32,10 +32,10 @@ if info:
     
 # def make_clickable(val):
 #     return f'<a href="{val}">{val}</a>'
-
+count=0
+current_time=0
 def main ():
-    count=0
-    current_time=0
+
     lista_server=["BR1","EUW1","JP1","KR","NA1"]
 
     server = st.selectbox(
