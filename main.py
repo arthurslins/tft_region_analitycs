@@ -32,9 +32,8 @@ if info:
     
 # def make_clickable(val):
 #     return f'<a href="{val}">{val}</a>'
-count=0
-current_time=0
-def main (count,current_time):
+
+def main ():
 
     lista_server=["BR1","EUW1","JP1","KR","NA1"]
 
@@ -253,6 +252,12 @@ def main (count,current_time):
             current_time = time_now.strftime("%H:%M:%S")
             with open('current_time.txt',"w") as f:
                 f.write(f'current_time={current_time}')
+    with open('count.txt',"r") as f:
+        contents = f.read()
+    count=int(contents[6])
+    with open('current_time.txt',"r") as f:
+        current_time = f.read()
+    current_time=current_time.split("=")[-1]
     st.sidebar.write(f"The program was used {count} times today")
     st.sidebar.write("The time this program was reset was :",current_time,"Brazil/East")   
     # if st.button("Atualizar o dia"):
@@ -277,7 +282,9 @@ def main (count,current_time):
 
 if __name__ == "__main__":
 
-    main(count,current_time)
+    main()
+            
+
     # st.sidebar.write('Quantas vezes  o app foi utilizado no dia = ', st.write(count))
 
 
