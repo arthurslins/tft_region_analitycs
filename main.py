@@ -121,7 +121,7 @@ def main ():
             contents = f.read()
         count=int(contents.split("=")[-1])
         count=count+1
-        print(f"The program was used {count} times today")
+        # print(f"The program was used {count} times today")
         with open('count.txt',"w") as f:
             f.write(f'count={count}')
         parcial["Posição"]=np.arange(parcial.shape[0])
