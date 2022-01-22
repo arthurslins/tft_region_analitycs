@@ -34,7 +34,7 @@ if info:
 #     return f'<a href="{val}">{val}</a>'
 count=0
 current_time=0
-def main ():
+def main (count,current_time):
 
     lista_server=["BR1","EUW1","JP1","KR","NA1"]
 
@@ -277,7 +277,7 @@ def main ():
 
 if __name__ == "__main__":
 
-    main()
+    main(count,current_time)
     # st.sidebar.write('Quantas vezes  o app foi utilizado no dia = ', st.write(count))
 
 
