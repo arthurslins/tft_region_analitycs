@@ -175,7 +175,30 @@ def main ():
     try:
         if snapi:
             if server =="BR1":
-
+                parcial["Posição"]=np.arange(parcial.shape[0])
+                parcial.set_index(parcial["Posição"],inplace=True)
+                parcial.drop("Posição",axis=1,inplace=True)
+                lolchess=[]
+                moba=[]
+                for nick in parcial.Nick:
+                    lolchess.append(f"https://lolchess.gg/profile/{result}/{nick}")
+                    moba.append(f"https://app.mobalytics.gg/pt_br/tft/profile/{result}/{nick}/overview")
+                parcial["lolchess"]=lolchess
+                parcial["mobalytics"]=moba
+                cols=["Nick", "Daily League Points", "Daily Games", "League Points", "Total Games","lolchess", "mobalytics"]
+                
+                parcial = parcial[cols] 
+                parcial.rename(columns={"Total Games": "Total Matches"},inplace=True)  
+        #         parcial["League Points Diários"] = parcial["League Points Diários"].astype(int)
+                parcial=parcial.dropna()
+                parcial["Daily League Points"]=parcial["Daily League Points"].astype(int)
+                parcial["Daily Games"]=parcial["Daily Games"].astype(int)
+                parcial["League Points"]=parcial["League Points"].astype(int)
+                parcial["Total Matches"]=parcial["Total Matches"].astype(int)
+                parcial.index+=1
+                st.write(parcial[parcial["Nick"]==pesquisa])
+                
+                st.write(parcial, unsafe_allow_html=True)
                 snap3=pd.read_csv("snap3.3.csv",index_col=0)
                         
                 snap3=snap3.merge(parcial,how="left",on="Nick")
