@@ -225,8 +225,11 @@ def main ():
             # snap.to_csv("snap3.csv")
     qualify = st.checkbox("Qualify Points:")
     if qualify:
-        qualify_points=pd.read_csv("qualify_t.csv")
-        st.write(qualify_points)
+        if server =="BR1":
+            qualify_points=pd.read_csv("qualify_t.csv")
+            st.write(qualify_points)
+        else:
+            pass
   
     senha= st.sidebar.text_input("Enter Admin password to update day")
     st.write(senha)
